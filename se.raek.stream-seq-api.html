@@ -1,0 +1,332 @@
+<html>
+  <head>
+    <title>se.raek.stream-seq API reference (stream-seq)</title>
+    <link href="static/favicon.png" rel="icon" />
+    <link href="static/favicon.png" rel="shortcut icon" />
+    <link media="all" type="text/css" href="static/clojure.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/wiki.css" rel="stylesheet" />
+    <link media="all" type="text/css" href="static/internal.css" rel="stylesheet" />
+    <!-- TODO: are we using these (from clojure.org)? If so, add the files -->
+    <script src="file/view/code_highlighter.js" type="text/javascript"></script>
+    <script src="file/view/clojure.js" type="text/javascript"></script>
+    <style>.menuWrapper{height: 36px;}</style>
+    <!--[if lte IE 6]>
+    <link rel="stylesheet" href="http://www.wikispaces.com/_/2009051601/s/internal_ie.css" type="text/css" />
+    <![endif]-->
+  </head>
+<!--
+This document was auto-generated from the source by the clojure autodoc system.
+To report errors or ask questions about the overall documentation structure, formatting,
+etc., contact Tom Faulhaber (google mail name: tomfaulhaber).
+For errors in the documentation of a particular namespace, contact the author of that
+namespace.
+-->
+  <body>
+    <div id="AllContentContainer">
+      <div id="Header">
+	<a id="Logo" href="index.html"><img alt="Clojure" height="100" width="100" src="static/clojure-icon.gif" /></a>
+	<h1><a title="page header title" id="page-header" href="index.html">stream-seq</a></h1>
+      </div>
+      <div id="leftcolumn"><div style="text-align: center;"></div>
+<div class="menu">
+  <div class="WikiCustomNav WikiElement wiki">
+    <a class="wiki_link" href="index.html">Overview</a><br />
+    <a class="wiki_link" href="api-index.html">API Index</a><br />
+    <a class="wiki_link" href="#">Namespaces:</a>
+    <ul id="left-sidebar-list">
+      <li><a href="se.raek.stream-seq-api.html" class="wiki_link">se.raek.stream-seq</a></li>
+    </ul>
+  </div>
+</div>
+</div>
+      <div id="rightcolumn">
+	<div id="Content">
+	  <div class="contentBox"><div class="innerContentBox">
+              <div id="content_view" class="wiki wikiPage">
+                <div id="right-sidebar"><div id="toc">
+  <h1 class="nopad">Table of Contents</h1>
+  <div style="margin-left: 1em;" class="toc-section">
+    <a href="#toc0">Overview</a>
+    <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/Sink">Sink</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/Source">Source</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/close">close</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/close!">close!</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/drainer">drainer</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/feeder">feeder</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/pipe">pipe</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/put">put</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/put!">put!</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/source-seq">source-seq</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/take!">take!</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq/walker">walker</a>
+    </div>
+    <br />
+  </div><div style="margin-left: 1em;" class="toc-section">
+    <a href="#se.raek.stream-seq.dialog">se.raek.stream-seq.dialog</a>
+    <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq.dialog/dialog-sink">dialog-sink</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq.dialog/dialog-source">dialog-source</a>
+    </div>
+    <br />
+  </div><div style="margin-left: 1em;" class="toc-section">
+    <a href="#se.raek.stream-seq.json">se.raek.stream-seq.json</a>
+    <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq.json/json-sink">json-sink</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq.json/json-source">json-source</a>
+    </div>
+    <br />
+  </div><div style="margin-left: 1em;" class="toc-section">
+    <a href="#se.raek.stream-seq.line">se.raek.stream-seq.line</a>
+    <div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq.line/line-sink">line-sink</a>
+    </div><div style="margin-left: 1em;" class="toc-entry">
+      <a href="#se.raek.stream-seq.line/line-source">line-source</a>
+    </div>
+    <br />
+  </div>
+</div>
+</div>
+                <div id="content-tag"><h1 id="overview">API for <span id="namespace-name">se.raek.stream-seq</span></h1>
+by <span id="author">Rasmus Svensson</span><br />
+<br />Usage:
+<pre>
+(ns your-namespace
+  (:require <span id="long-name">se.raek.stream-seq</span>))
+</pre><pre>
+</pre><h2>Overview</h2>
+<pre id="namespace-docstr">Stream-oriented programming with sequences</pre>
+<br />
+<h2>Public Variables and Functions</h2>
+<div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/Sink">Sink</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">Protocol for things that provide a way of putting items into a stream.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/Source">Source</h2>
+  <span id="var-type">var</span><br />
+  <pre id="var-usage"></pre>
+  <pre id="var-docstr">Protocol for things that provide a way of taking items from a stream.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/close">close</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (close sink-agent item)
+</pre>
+  <pre id="var-docstr">Like close!, but is safe to use in transactions and requires the sink to be
+wrapped in an agent. The actual close! call will be held until the
+transaction succeeds.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/close!">close!</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (close! sink)
+</pre>
+  <pre id="var-docstr">Closes the sink so that no more objects can be put into it.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/drainer">drainer</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (drainer source sink :close-when-done false)
+</pre>
+  <pre id="var-docstr">Takes items from source and puts them into sink. A separate thread is
+started, which takes items from source and puts them into sink until the
+source is closed. The return value is a map with the key :future associated
+with the future object that traverses the sequence.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/feeder">feeder</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (feeder sink coll :close-when-done false)
+</pre>
+  <pre id="var-docstr">Starts a separate thread that puts every element of coll into sink. coll
+is presumably a lazy sequence that blocks during its realization. The
+return value is a map with the key :future associated with the future
+object that traverses the sequence.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/pipe">pipe</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (pipe)
+</pre>
+  <pre id="var-docstr">Makes a pipe object, which can be used both as a Source and a Sink. Objects
+put into the sink will be stored in a queue until they are taken from the
+source.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/put">put</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (put sink-agent item)
+</pre>
+  <pre id="var-docstr">Like put!, but is safe to use in transactions and requires the sink to be
+wrapped in an agent. The actual put! call will be held until the
+transaction succeeds.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/put!">put!</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (put! sink item)
+</pre>
+  <pre id="var-docstr">Puts the item into the sink. Throws an IllegalStateException if the
+sink is closed.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/source-seq">source-seq</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (source-seq source)
+</pre>
+  <pre id="var-docstr">Returns a lazy sequence that takes items from source. The source-seq will
+only contain all items emanating from the source if it is the only process
+taking from that source.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/take!">take!</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (take! source)
+       (take! source end-value)
+</pre>
+  <pre id="var-docstr">Retrieves and removes the next object from the source. If the source
+is closed the end-value sentinel object -- or nil if it is not given
+-- is returned instead.</pre>
+  
+</div><div id="var-entry">
+  <br />
+  <hr />
+  <h2 id="se.raek.stream-seq/walker">walker</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (walker coll)
+</pre>
+  <pre id="var-docstr">Starts a separate thread that walks through coll -- presumably a lazy
+sequence that blocks during its realization -- and records the last part of
+its tail that has been realized. This is intended to provide a way to
+"jump in" into the last known part of a sequence without having to retain
+its head. The return value is a map with the key :future associated
+with the future object that traverses the sequence, and :tail with the last
+seen realized part of the sequence inside an atom.</pre>
+  
+</div>
+<h2 id="namespace-name">se.raek.stream-seq.dialog</h2>
+<pre id="namespace-docstr">Pop-up dialogs for experimenting with the stream-seq library</pre>
+<br />
+<div id="var-entry">
+  <hr />
+  <h2 id="se.raek.stream-seq.dialog/dialog-sink">dialog-sink</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (dialog-sink)
+       (dialog-sink title)
+</pre>
+  <pre id="var-docstr">Makes a sink that displays items to the user with pop-up dialogs.</pre>
+  
+</div><div id="var-entry">
+  <hr />
+  <h2 id="se.raek.stream-seq.dialog/dialog-source">dialog-source</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (dialog-source)
+       (dialog-source message)
+       (dialog-source title message)
+</pre>
+  <pre id="var-docstr">Makes a source that asks the user for items with pop-up dialogs.</pre>
+  
+</div>
+<h2 id="namespace-name">se.raek.stream-seq.json</h2>
+<pre id="namespace-docstr">Read and write JSON data using the stream-seq library</pre>
+<br />
+<div id="var-entry">
+  <hr />
+  <h2 id="se.raek.stream-seq.json/json-sink">json-sink</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (json-sink out &amp; options)
+</pre>
+  <pre id="var-docstr">Makes a sink that writes json scalars, arrays and objects to out. The
+arguments are passed to clojure.java.io/writer to make a writer of out, if
+it isn't one.</pre>
+  
+</div><div id="var-entry">
+  <hr />
+  <h2 id="se.raek.stream-seq.json/json-source">json-source</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (json-source in &amp; options)
+</pre>
+  <pre id="var-docstr">Makes a source that reads a sequence of json scalars, arrays and objects
+from in. If in is a string, the json data will be read from its contents.
+Otherwise, the arguments are passed to clojure.java.io/reader to make a
+reader of in, if it isn't one.</pre>
+  
+</div>
+<h2 id="namespace-name">se.raek.stream-seq.line</h2>
+<pre id="namespace-docstr">Line-oriented streams built on Java's BufferReader and BufferedWriter</pre>
+<br />
+<div id="var-entry">
+  <hr />
+  <h2 id="se.raek.stream-seq.line/line-sink">line-sink</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (line-sink out &amp; options)
+</pre>
+  <pre id="var-docstr">Makes a source that writes lines to out. The arguments are passed to
+clojure.java.io/writer to make a writer of out, if it isn't one.</pre>
+  
+</div><div id="var-entry">
+  <hr />
+  <h2 id="se.raek.stream-seq.line/line-source">line-source</h2>
+  <span id="var-type">function</span><br />
+  <pre id="var-usage">Usage: (line-source in &amp; options)
+</pre>
+  <pre id="var-docstr">Makes a source that reads lines from in. The arguments are passed to
+clojure.java.io/reader to make a reader f in, if it isn't one.</pre>
+  
+</div>
+
+
+</div>
+              </div>
+            </div>
+          </div>
+	</div>
+	<div id="foot">
+	  <div style="text-align: center;" id="copyright">No copyright info </div>
+	</div>
+      </div>
+      <div id="DesignedBy">Logo &amp; site design by <a title="Visit Tom Hickey's website." href="http://www.tomhickey.com">Tom Hickey</a>.<br />
+      Clojure auto-documentation system by Tom Faulhaber.</div>
+    </div>
+    <!-- /AllContentContainer -->
+  </body>
+
+</html>
