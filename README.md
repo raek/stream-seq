@@ -13,7 +13,7 @@ Require one or more of these namespaces:
 
 ## API
 
-See [this project's gh-pages]("http://raek.github.com/stream-seq/").
+See http://raek.github.com/stream-seq/
 
 ## Installation
 
